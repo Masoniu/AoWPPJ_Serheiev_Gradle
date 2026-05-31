@@ -1,26 +1,23 @@
 plugins {
     java
+    application
 }
 
-group = "com.example"
-version = "1.0.0"
+group = "com.audioengine"
+version = "1.0-SNAPSHOT"
 
-apply<ProjectAnalysis>()
-
-tasks.register<Copy>("backupSources") {
-    group = "custom tasks"
-    description = "Makes backup copy of the project"
-    from("src/main/java")
-    into(layout.buildDirectory.dir("backup-sources"))
-    doFirst {
-        println("Starting files backup...")
-    }
-
-    doLast {
-        println("Backup created successfully in build/backup-sources")
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://mvn.0110.be/releases")
     }
 }
 
-tasks.named("backupSources") {
-    dependsOn("projectStats")
+dependencies {
+    implementation("be.tarsos.dsp:core:2.5")
+    implementation("be.tarsos.dsp:jvm:2.5")
+}
+
+application {
+    mainClass.set("Main")
 }
