@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.bundling.Zip
+import java.time.LocalDate
+
 plugins {
     java
     application
@@ -8,9 +11,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://mvn.0110.be/releases")
-    }
+    maven { url = uri("https://mvn.0110.be/releases") }
 }
 
 dependencies {
@@ -20,4 +21,39 @@ dependencies {
 
 application {
     mainClass.set("Main")
+}
+
+apply<SearchEngineValidation>()
+
+tasks.register<Zip>("backupSourceCode") {
+    group = "maintenance"
+    description = "Creates a ZIP backup of the source code"
+
+    from("src") {
+        into("src")
+    }
+    from("build.gradle.kts")
+
+    archiveFileName.set("src-backup-${LocalDate.now()}.zip")
+    destinationDirectory.set(layout.buildDirectory.dir("backups"))
+
+    doFirst {
+        println("Starting source code backup...")
+    }
+
+    doLast {
+        println("Backup created: build/backups/${archiveFileName.get()}")
+    }
+}
+
+tasks.named("compileJava") {
+    dependsOn("backupSourceCode")
+}
+
+tasks.named("generateIndexManifest") {
+    mustRunAfter("verifyIndexEncoding")
+}
+
+tasks.named("build") {
+    dependsOn("verifyIndexEncoding", "generateIndexManifest")
 }
