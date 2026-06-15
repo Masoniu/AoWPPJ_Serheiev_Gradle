@@ -17,6 +17,9 @@ repositories {
 dependencies {
     implementation("be.tarsos.dsp:core:2.5")
     implementation("be.tarsos.dsp:jvm:2.5")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
+    testImplementation("org.junit.platform:junit-platform-suite-api:1.10.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-suite-engine:1.10.0")
 }
 
 application {
@@ -56,4 +59,11 @@ tasks.named("generateIndexManifest") {
 
 tasks.named("build") {
     dependsOn("verifyIndexEncoding", "generateIndexManifest")
+}
+
+tasks.test{
+    useJUnitPlatform()
+    testLogging{
+        events("passed", "skipped", "failed")
+    }
 }
