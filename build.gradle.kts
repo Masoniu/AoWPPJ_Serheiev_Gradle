@@ -70,6 +70,6 @@ tasks.test{
 }
 
 checkstyle {
-    toolVersion = "10.12.4"
+    toolVersion = "10.17.0"
     isIgnoreFailures = true
 }
