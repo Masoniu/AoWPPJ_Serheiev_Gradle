@@ -70,13 +70,19 @@ class MatcherEngineTest {
 
     @Test
     @Tag("integration")
-    @DisplayName("Index loading and integrity check")
-    void testRealIndexIntegrity() {
-        File indexFile = new File("audio_index.dat");
-        Assumptions.assumeTrue(indexFile.exists() && indexFile.length() > 0, "File audio_index.dat absent, loading test aborted");
-        InvertedIndex loadedIndex = (InvertedIndex) IndexStorage.load("audio_index.dat");
-
-        assertNotNull(loadedIndex, "Index could not be loaded from existing file");
-        assertTrue(loadedIndex.getUniqueHashesCount() >= 0, "Hashes count can not be negative");
+    @DisplayName("Testing reliability of writing and reading indexes")
+    void testStorageIntegration() {
+        File tempFile = new File("test_dummy_index.dat");
+        Assumptions.assumeTrue(tempFile.getAbsoluteFile().getParentFile().canWrite(), "Test aborted, cannot write in this directory");
+        InvertedIndex dummyIndex = new InvertedIndex();
+        dummyIndex.addSong(999, "Test Driven Track");
+        dummyIndex.addFingerprint(12345L, 999, 10);
+        IndexStorage.save(dummyIndex, tempFile.getName());
+        assertTrue(tempFile.exists(), "File should be created on disk");
+        InvertedIndex loadedIndex = (InvertedIndex) IndexStorage.load(tempFile.getName());
+        assertNotNull(loadedIndex, "Index should be loaded successfully");
+        assertEquals("Test Driven Track", loadedIndex.getSongName(999),
+                "Data after deserialization should be the same");
+        tempFile.delete();
     }
 }
