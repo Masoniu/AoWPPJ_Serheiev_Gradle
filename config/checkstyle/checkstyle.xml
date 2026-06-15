@@ -4,22 +4,15 @@
         "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
-
     <property name="charset" value="UTF-8"/>
-
     <property name="severity" value="warning"/>
-
     <property name="fileExtensions" value="java, properties, xml"/>
+
     <module name="BeforeExecutionExclusionFileFilter">
         <property name="fileNamePattern" value="module\-info\.java$"/>
     </module>
 
     <module name="SuppressWarningsFilter"/>
-
-    <module name="SuppressionFilter">
-        <property name="file" value="checkstyle-suppressions.xml" />
-        <property name="optional" value="true"/>
-    </module>
 
     <module name="SuppressWithNearbyTextFilter">
         <property name="nearbyTextPattern" value="CHECKSTYLE.SUPPRESS\: (\w+) for ([+-]\d+) lines"/>
@@ -265,7 +258,7 @@
         <module name="OperatorWrap">
             <property name="id" value="OperatorWrapNL"/>
             <property name="option" value="NL"/>
-            <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR, METHOD_REF, TYPE_EXTENSION_AND "/>
+            <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR, METHOD_REF, TYPE_EXTENSION_AND"/>
         </module>
         <module name="OperatorWrap">
             <property name="id" value="OperatorWrapEOL"/>
@@ -348,11 +341,6 @@
         </module>
         <module name="CommentsIndentation">
             <property name="tokens" value="SINGLE_LINE_COMMENT, BLOCK_COMMENT_BEGIN"/>
-        </module>
-
-        <module name="SuppressionXpathFilter">
-            <property name="file" value="checkstyle-xpath-suppressions.xml" />
-            <property name="optional" value="true"/>
         </module>
 
         <module name="SuppressWarningsHolder" />
