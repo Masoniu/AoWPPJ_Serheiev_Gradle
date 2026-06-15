@@ -4,6 +4,7 @@ import java.time.LocalDate
 plugins {
     java
     application
+    checkstyle
 }
 
 group = "com.audioengine"
@@ -66,4 +67,9 @@ tasks.test{
     testLogging{
         events("passed", "skipped", "failed")
     }
+}
+
+checkstyle {
+    toolVersion = "10.12.4"
+    isIgnoreFailures = true
 }
