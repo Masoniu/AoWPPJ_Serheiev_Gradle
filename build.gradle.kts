@@ -5,6 +5,7 @@ plugins {
     java
     application
     checkstyle
+    id("info.solidsoft.pitest") version "1.15.0"
 }
 
 group = "com.audioengine"
@@ -21,6 +22,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
     testImplementation("org.junit.platform:junit-platform-suite-api:1.10.0")
     testRuntimeOnly("org.junit.platform:junit-platform-suite-engine:1.10.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.11.0")
+    testImplementation("org.assertj:assertj-core:3.25.3")
 }
 
 application {
@@ -72,4 +75,9 @@ tasks.test{
 checkstyle {
     toolVersion = "10.21.0"
     isIgnoreFailures = true
+}
+
+pitest {
+    junit5PluginVersion.set("1.2.1")
+    targetClasses.set(setOf("com.audioengine.*"))
 }

@@ -1,3 +1,5 @@
+package com.audioengine;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,7 +15,7 @@ class MatcherEngineTest {
 
     @Test
     @Tag("search")
-    @DisplayName("AudioMatcher. java testing empty query")
+    @DisplayName("com.audioengine.AudioMatcher. java testing empty query")
     void testAudioMatcherEmptyQuery() {
         InvertedIndex emptyIndex = new InvertedIndex();
         AudioMatcher matcher = new AudioMatcher(emptyIndex);
@@ -26,7 +28,7 @@ class MatcherEngineTest {
     @ParameterizedTest
     @ValueSource(strings = {"U", "UD", "UUDD", "S"})
     @Tag("search")
-    @DisplayName("MelodyMatcher.java rejection for too short Parsons contour")
+    @DisplayName("com.audioengine.MelodyMatcher.java rejection for too short Parsons contour")
     void testMelodyMatcherShortQueries(String shortContour) {
         MelodyIndex emptyIndex = new MelodyIndex();
         MelodyMatcher matcher = new MelodyMatcher(emptyIndex);
@@ -43,7 +45,7 @@ class MatcherEngineTest {
             "Bohemian Rhapsody, 14, 'Found: Bohemian Rhapsody (Score: 14)'"
     })
     @Tag("core")
-    @DisplayName("SearchResult.java result formating validation")
+    @DisplayName("com.audioengine.SearchResult.java result formating validation")
     void testSearchResultFormatting(String name, int score, String expectedOutput) {
         SearchResult result = new SearchResult(name, score);
         assertEquals(expectedOutput, result.toString(), "toString() forms wrong output");
@@ -51,7 +53,7 @@ class MatcherEngineTest {
 
     @TestFactory
     @Tag("core")
-    @DisplayName("Checking IndexStorage for reliability in missing files case")
+    @DisplayName("Checking com.audioengine.IndexStorage for reliability in missing files case")
     Stream<DynamicTest> dynamicTestIndexStorageMissingFiles() {
         String[] fakePaths = {
                 "missing_audio_index.dat",
@@ -63,7 +65,7 @@ class MatcherEngineTest {
                 "Trying to load nonexistent file: " + path,
                 () -> {
                     Object result = IndexStorage.load(path);
-                    assertNull(result, "IndexStorage.load should return null");
+                    assertNull(result, "com.audioengine.IndexStorage.load should return null");
                 }
         ));
     }
